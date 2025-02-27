@@ -1,0 +1,19 @@
+version: "3.11.4"
+services:
+  api:
+    build: ./API
+    ports:
+      - "6000:6000"
+    networks:
+      - my_network
+
+  etl:
+    build: ./ETL
+    depends_on:
+      - api
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
