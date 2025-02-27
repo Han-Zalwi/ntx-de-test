@@ -1,7 +1,0 @@
-NOTE : 
-I used google bigquery for producing this query code and the name of the table that i built is `hardy-device-431214-f8.2002Han.public`. However, You can change it with the table that you have
-
-SQL CODE : 
-with raw_data as (SELECT v2ProductName, sum(cast(productRevenue as int)) productRevenue, sum(cast(productQuantity as int)) productQuantity, sum(cast(productRefundAmount as int)) productRefundAmount FROM `hardy-device-431214-f8.2002Han.public` group by 1)
-select *, row_number() over(order by netRevenue desc) rank, case when productRefundAmount > (0.1 * netRevenue) then 1 else 0 end as flag   from (
-select v2ProductName, productRevenue,  productQuantity, productRefundAmount, (productRevenue * productQuantity) - productRefundAmount as netRevenue from raw_data)
